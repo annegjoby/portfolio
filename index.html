@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ditt Navn – CV og portefølje</title>
+  <meta name="description" content="CV og portefølje for Ditt Navn.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#hjem">Ditt Navn</a>
+    <button class="menu-toggle" aria-label="Meny" aria-expanded="false">☰</button>
+    <nav class="site-nav">
+      <a href="#om">Om meg</a>
+      <a href="#cv">CV</a>
+      <a href="#prosjekter">Prosjekter</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hjem" class="hero">
+      <h1>Hei, jeg er Ditt Navn</h1>
+      <p class="lead">Kort setning om hva du gjør.</p>
+      <a class="button" href="#prosjekter">Se prosjektene mine</a>
+    </section>
+
+    <section id="om">
+      <h2>Om meg</h2>
+      <p>Skriv noen linjer om deg selv her.</p>
+    </section>
+
+    <section id="cv">
+      <h2>CV</h2>
+      <h3>Erfaring</h3>
+      <ul class="timeline">
+        <li><strong>Stilling, Selskap</strong> <span>2022 – nå</span><p>Kort beskrivelse.</p></li>
+        <li><strong>Stilling, Selskap</strong> <span>2019 – 2022</span><p>Kort beskrivelse.</p></li>
+      </ul>
+      <h3>Utdanning</h3>
+      <ul class="timeline">
+        <li><strong>Grad, Skole</strong> <span>2015 – 2019</span></li>
+      </ul>
+      <h3>Ferdigheter</h3>
+      <ul class="tags"><li>Ferdighet 1</li><li>Ferdighet 2</li><li>Ferdighet 3</li></ul>
+      <p><a href="assets/cv.pdf">Last ned CV som PDF</a></p>
+    </section>
+
+    <section id="prosjekter">
+      <h2>Prosjekter</h2>
+      <div id="project-list" class="cards"></div>
+    </section>
+
+    <section id="kontakt">
+      <h2>Kontakt</h2>
+      <p><a href="mailto:din@epost.no">din@epost.no</a></p>
+      <p><a href="https://github.com/brukernavn">GitHub</a> · <a href="https://www.linkedin.com/in/brukernavn">LinkedIn</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">© <span id="year"></span> Ditt Navn</footer>
+
+  <script src="js/projects.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
