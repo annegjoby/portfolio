@@ -1,9 +1,22 @@
-/* Sporting Grotesque er ikke publisert (lisens ikke avklart for webbruk).
-   For å bruke den: legg @font-face tilbake og sett --font-display til den. */
+/* Sporting Grotesque: fontfilene ligger i assets/fonts/, som er gitignored fordi
+   lisensen for webbruk ikke er avklart. Uten filene faller titler tilbake til Inter. */
+@font-face {
+  font-family: "Sporting Grotesque";
+  src: url("../assets/fonts/SportingGrotesque-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sporting Grotesque";
+  src: url("../assets/fonts/SportingGrotesque-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
 
 :root {
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-body);
+  --font-display: "Sporting Grotesque", var(--font-body);
   --bg: #ffffff;
   --text: #1c1c1e;
   --muted: #6b6b70;
@@ -52,7 +65,7 @@ main, .site-header, .site-footer {
 
 .logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--text); }
 
-.hero h1, h2 { font-family: var(--font-display); }
+h1, h2, h3 { font-family: var(--font-display); }
 
 .site-nav { display: flex; gap: 1.25rem; font-family: var(--font-display); }
 .site-nav a { text-decoration: none; color: var(--muted); }
@@ -69,17 +82,21 @@ main, .site-header, .site-footer {
 
 section { padding: 3rem 0; }
 
-.hero { padding: 5rem 0 4rem; }
-.hero h1 { font-size: 2.5rem; margin: 0 0 0.5rem; }
-.lead { font-size: 1.2rem; color: var(--muted); }
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 4rem);
+  min-height: calc(100svh - 4rem);
+  padding: 2rem 0 4rem;
+}
 
-.button {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  background: var(--text);
-  color: var(--bg);
-  border-radius: 6px;
-  text-decoration: none;
+.hero h1 {
+  max-width: 24ch;
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 .timeline { list-style: none; padding: 0; }
