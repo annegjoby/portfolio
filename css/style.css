@@ -17,9 +17,9 @@
 :root {
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Sporting Grotesque", var(--font-body);
-  --butter: #FEFFED;
+  --hero-bg: #AF9C58;
   --burgundy: #571D29;
-  --olive: #AFAE52;
+  --menu: #B9CBD9;
   --pad: clamp(1rem, 4vw, 3rem);
   --header-h: 3.5rem;
   --bg: #ffffff;
@@ -65,7 +65,7 @@ a { color: var(--text); }
   min-height: var(--header-h);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  background: var(--butter);
+  background: var(--hero-bg);
   z-index: 10;
 }
 
@@ -74,7 +74,7 @@ a { color: var(--text); }
 h1, h2, h3 { font-family: var(--font-display); }
 
 .site-nav { display: flex; gap: 1.25rem; font-family: var(--font-display); }
-.site-nav a { text-decoration: none; color: var(--olive); }
+.site-nav a { text-decoration: none; color: var(--menu); }
 .site-nav a:hover, .site-nav a.active { color: var(--burgundy); }
 
 .menu-toggle {
@@ -94,12 +94,12 @@ section { padding: 3rem var(--pad); }
   min-height: calc(100vh - var(--header-h));
   min-height: calc(100svh - var(--header-h));
   padding: 2rem var(--pad) 4rem;
-  background: var(--butter);
+  background: var(--hero-bg);
   color: var(--burgundy);
 }
 
 .hero h1 {
-  max-width: 28ch;
+  max-width: 20ch;
   margin: 0;
   font-size: clamp(1.5rem, 4vw, 3rem);
   font-weight: 600;
