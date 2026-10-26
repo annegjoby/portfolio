@@ -1,4 +1,9 @@
+/* Sporting Grotesque er ikke publisert (lisens ikke avklart for webbruk).
+   For å bruke den: legg @font-face tilbake og sett --font-display til den. */
+
 :root {
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-body);
   --bg: #ffffff;
   --text: #1c1c1e;
   --muted: #6b6b70;
@@ -25,7 +30,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-body);
   line-height: 1.6;
   background: var(--bg);
   color: var(--text);
@@ -34,10 +39,9 @@ body {
 a { color: var(--accent); }
 
 main, .site-header, .site-footer {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  width: 100%;
+  padding-left: clamp(1rem, 4vw, 3rem);
+  padding-right: clamp(1rem, 4vw, 3rem);
 }
 
 .site-header {
@@ -54,9 +58,11 @@ main, .site-header, .site-footer {
   z-index: 10;
 }
 
-.logo { font-weight: 700; text-decoration: none; color: var(--text); }
+.logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--text); }
 
-.site-nav { display: flex; gap: 1.25rem; }
+.hero h1, h2 { font-family: var(--font-display); }
+
+.site-nav { display: flex; gap: 1.25rem; font-family: var(--font-display); }
 .site-nav a { text-decoration: none; color: var(--muted); }
 .site-nav a:hover, .site-nav a.active { color: var(--accent); }
 
@@ -93,7 +99,9 @@ section:last-child { border-bottom: 0; }
 .tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .tags li { background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 0.15rem 0.75rem; font-size: 0.9rem; }
 
-.cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.cards { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+
+section > p, .timeline { max-width: 70ch; }
 .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
 .card h3 { margin-top: 0; }
 .card p { color: var(--muted); }
