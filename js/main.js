@@ -11,14 +11,6 @@ projects.forEach((p) => {
   const desc = document.createElement("p");
   desc.textContent = p.description;
 
-  const tags = document.createElement("ul");
-  tags.className = "tags";
-  p.tags.forEach((t) => {
-    const li = document.createElement("li");
-    li.textContent = t;
-    tags.append(li);
-  });
-
   const links = document.createElement("p");
   p.links.forEach((l, i) => {
     if (i > 0) links.append(" · ");
@@ -28,7 +20,7 @@ projects.forEach((p) => {
     links.append(a);
   });
 
-  card.append(title, desc, tags, links);
+  card.append(title, desc, links);
   list.append(card);
 });
 
