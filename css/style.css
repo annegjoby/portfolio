@@ -17,9 +17,6 @@
 :root {
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Sporting Grotesque", var(--font-body);
-  --hero-bg: #AF9C58;
-  --burgundy: #571D29;
-  --menu: #B9CBD9;
   --pad: clamp(1rem, 4vw, 3rem);
   --header-h: 3.5rem;
   --bg: #ffffff;
@@ -65,24 +62,24 @@ a { color: var(--text); }
   min-height: var(--header-h);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  background: var(--hero-bg);
+  background: var(--bg);
   z-index: 10;
 }
 
-.logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--burgundy); }
+.logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--text); }
 
 h1, h2, h3 { font-family: var(--font-display); }
 
 .site-nav { display: flex; gap: 1.25rem; font-family: var(--font-display); }
-.site-nav a { text-decoration: none; color: var(--menu); }
-.site-nav a:hover, .site-nav a.active { color: var(--burgundy); }
+.site-nav a { text-decoration: none; color: var(--muted); }
+.site-nav a:hover, .site-nav a.active { color: var(--text); }
 
 .menu-toggle {
   display: none;
   background: none;
   border: 0;
   font-size: 1.5rem;
-  color: var(--burgundy);
+  color: var(--text);
   cursor: pointer;
 }
 
@@ -94,8 +91,8 @@ section { padding: 3rem var(--pad); }
   min-height: calc(100vh - var(--header-h));
   min-height: calc(100svh - var(--header-h));
   padding: 2rem var(--pad) 4rem;
-  background: var(--hero-bg);
-  color: var(--burgundy);
+  background: var(--bg);
+  color: var(--text);
 }
 
 .hero h1 {
