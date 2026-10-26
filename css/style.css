@@ -17,6 +17,11 @@
 :root {
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Sporting Grotesque", var(--font-body);
+  --butter: #FEFFED;
+  --burgundy: #571D29;
+  --olive: #AFAE52;
+  --pad: clamp(1rem, 4vw, 3rem);
+  --header-h: 3.5rem;
   --bg: #ffffff;
   --text: #1c1c1e;
   --muted: #6b6b70;
@@ -44,10 +49,10 @@ body {
 
 a { color: var(--text); }
 
-main, .site-header, .site-footer {
+.site-header, .site-footer {
   width: 100%;
-  padding-left: clamp(1rem, 4vw, 3rem);
-  padding-right: clamp(1rem, 4vw, 3rem);
+  padding-left: var(--pad);
+  padding-right: var(--pad);
 }
 
 .site-header {
@@ -57,43 +62,46 @@ main, .site-header, .site-footer {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  background: var(--bg);
+  min-height: var(--header-h);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background: var(--butter);
   z-index: 10;
 }
 
-.logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--text); }
+.logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--burgundy); }
 
 h1, h2, h3 { font-family: var(--font-display); }
 
 .site-nav { display: flex; gap: 1.25rem; font-family: var(--font-display); }
-.site-nav a { text-decoration: none; color: var(--muted); }
-.site-nav a:hover, .site-nav a.active { color: var(--text); }
+.site-nav a { text-decoration: none; color: var(--olive); }
+.site-nav a:hover, .site-nav a.active { color: var(--burgundy); }
 
 .menu-toggle {
   display: none;
   background: none;
   border: 0;
   font-size: 1.5rem;
-  color: var(--text);
+  color: var(--burgundy);
   cursor: pointer;
 }
 
-section { padding: 3rem 0; }
+section { padding: 3rem var(--pad); }
 
 .hero {
   display: flex;
   align-items: center;
-  min-height: calc(100vh - 4rem);
-  min-height: calc(100svh - 4rem);
-  padding: 2rem 0 4rem;
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
+  padding: 2rem var(--pad) 4rem;
+  background: var(--butter);
+  color: var(--burgundy);
 }
 
 .hero h1 {
-  max-width: 24ch;
+  max-width: 28ch;
   margin: 0;
-  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-size: clamp(1.5rem, 4vw, 3rem);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.03em;
