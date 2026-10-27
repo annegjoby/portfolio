@@ -59,8 +59,6 @@ h2 { margin: 0 0 1.5rem; }
   top: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
   height: 100vh;
   height: 100svh;
   padding: var(--pad);
@@ -68,16 +66,17 @@ h2 { margin: 0 0 1.5rem; }
 
 .logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; }
 
+/* Toppstilt, på linje med overskriften til høyre */
 .intro h1 {
-  max-width: 20ch;
-  margin: 0;
-  font-size: clamp(1.5rem, 2.8vw, 2.75rem);
+  max-width: 28ch;
+  margin: 4rem 0 0;
+  font-size: clamp(1.15rem, 1.7vw, 1.6rem);
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
-.copyright { margin: 0; font-size: 0.9rem; color: var(--muted); }
+.copyright { margin: auto 0 0; font-size: 0.9rem; color: var(--muted); }
 
 /* Høyre: meny og skiftende innhold */
 .content { padding: var(--pad); }
@@ -108,7 +107,9 @@ h2 { margin: 0 0 1.5rem; }
 /* Smal skjerm: kolonnene legges under hverandre */
 @media (max-width: 800px) {
   .split { display: block; }
-  .intro { position: static; height: auto; min-height: 70vh; min-height: 70svh; }
+  .intro { position: static; height: auto; }
+  .intro h1 { margin-top: 2.5rem; }
+  .copyright { margin-top: 2.5rem; }
   .site-nav { justify-content: flex-start; }
   .panel { padding-top: 2.5rem; }
 }
