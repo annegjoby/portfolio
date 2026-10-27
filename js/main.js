@@ -24,32 +24,30 @@ projects.forEach((p) => {
   list.append(card);
 });
 
-// Mobilmeny
-const toggle = document.querySelector(".menu-toggle");
-const nav = document.querySelector(".site-nav");
+// Bytt innhold på høyre side basert på menyvalg
+const panels = document.querySelectorAll(".panel");
+const navLinks = document.querySelectorAll(".site-nav a");
+const defaultPanel = "prosjekter";
 
-toggle.addEventListener("click", () => {
-  const open = nav.classList.toggle("open");
-  toggle.setAttribute("aria-expanded", open);
+function show(id) {
+  if (!document.getElementById(id)?.classList.contains("panel")) id = defaultPanel;
+  panels.forEach((p) => { p.hidden = p.id !== id; });
+  navLinks.forEach((a) => {
+    if (a.hash === `#${id}`) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+}
+
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    history.pushState(null, "", a.hash);
+    show(a.hash.slice(1));
+    window.scrollTo(0, 0);
+  });
 });
 
-nav.addEventListener("click", () => {
-  nav.classList.remove("open");
-  toggle.setAttribute("aria-expanded", "false");
-});
-
-// Marker aktiv seksjon i menyen
-const links = document.querySelectorAll(".site-nav a");
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        links.forEach((a) => a.classList.toggle("active", a.hash === `#${e.target.id}`));
-      }
-    });
-  },
-  { rootMargin: "-40% 0px -55% 0px" }
-);
-document.querySelectorAll("main section").forEach((s) => observer.observe(s));
+window.addEventListener("popstate", () => show(location.hash.slice(1)));
+show(location.hash.slice(1));
 
 document.getElementById("year").textContent = new Date().getFullYear();

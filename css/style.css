@@ -17,8 +17,7 @@
 :root {
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Sporting Grotesque", var(--font-body);
-  --pad: clamp(1rem, 4vw, 3rem);
-  --header-h: 3.5rem;
+  --pad: clamp(1.25rem, 3vw, 3rem);
   --bg: #ffffff;
   --text: #1c1c1e;
   --muted: #6b6b70;
@@ -34,8 +33,6 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
-
 body {
   margin: 0;
   font-family: var(--font-body);
@@ -45,81 +42,73 @@ body {
 }
 
 a { color: var(--text); }
+h1, h2, h3 { font-family: var(--font-display); }
+h2 { margin: 0 0 1.5rem; }
 
-.site-header, .site-footer {
-  width: 100%;
-  padding-left: var(--pad);
-  padding-right: var(--pad);
+/* To kolonner: 40 / 60 */
+.split {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
-.site-header {
+/* Venstre: presentasjon, står stille mens høyre side scroller */
+.intro {
   position: sticky;
   top: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
-  flex-wrap: wrap;
-  min-height: var(--header-h);
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  background: var(--bg);
-  z-index: 10;
+  gap: 2rem;
+  height: 100vh;
+  height: 100svh;
+  padding: var(--pad);
 }
 
-.logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--text); }
+.logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; }
 
-h1, h2, h3 { font-family: var(--font-display); }
-
-.site-nav { display: flex; gap: 1.25rem; font-family: var(--font-display); }
-.site-nav a { text-decoration: none; color: var(--muted); }
-.site-nav a:hover, .site-nav a.active { color: var(--text); }
-
-.menu-toggle {
-  display: none;
-  background: none;
-  border: 0;
-  font-size: 1.5rem;
-  color: var(--text);
-  cursor: pointer;
-}
-
-section { padding: 3rem var(--pad); }
-
-.hero {
-  display: flex;
-  align-items: center;
-  min-height: calc(100vh - var(--header-h));
-  min-height: calc(100svh - var(--header-h));
-  padding: 2rem var(--pad) 4rem;
-  background: var(--bg);
-  color: var(--text);
-}
-
-.hero h1 {
+.intro h1 {
   max-width: 20ch;
   margin: 0;
-  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-size: clamp(1.5rem, 2.8vw, 2.75rem);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
+
+.copyright { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+/* Høyre: meny og skiftende innhold */
+.content { padding: var(--pad); }
+
+.site-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  font-family: var(--font-display);
+}
+
+.site-nav a { text-decoration: none; color: var(--muted); }
+.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--text); }
+
+.panel { padding: 4rem 0 2rem; }
+.panel[hidden] { display: none; }
+.panel > p, .timeline { max-width: 60ch; }
 
 .timeline { list-style: none; padding: 0; }
 .timeline li { margin-bottom: 1rem; }
 .timeline span { color: var(--muted); margin-left: 0.5rem; }
 .timeline p { margin: 0.2rem 0 0; }
 
-.cards { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
-
-section > p, .timeline { max-width: 70ch; }
+.cards { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
 .card h3 { margin-top: 0; }
 .card p { color: var(--muted); }
 
-.site-footer { padding-top: 2rem; padding-bottom: 2rem; color: var(--muted); font-size: 0.9rem; }
-
-@media (max-width: 600px) {
-  .menu-toggle { display: block; }
-  .site-nav { display: none; flex-direction: column; width: 100%; padding-top: 0.5rem; }
-  .site-nav.open { display: flex; }
-  .hero h1 { font-size: 2rem; }
+/* Smal skjerm: kolonnene legges under hverandre */
+@media (max-width: 800px) {
+  .split { display: block; }
+  .intro { position: static; height: auto; min-height: 70vh; min-height: 70svh; }
+  .site-nav { justify-content: flex-start; }
+  .panel { padding-top: 2.5rem; }
 }
