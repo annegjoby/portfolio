@@ -42,8 +42,7 @@ body {
 }
 
 a { color: var(--text); }
-h1, h2, h3 { font-family: var(--font-display); }
-h2 { margin: 0 0 1.5rem; }
+h1, h3 { font-family: var(--font-display); }
 
 /* To kolonner: 40 / 60 */
 .split {
@@ -93,6 +92,7 @@ h2 { margin: 0 0 1.5rem; }
 
 .panel { padding: 4rem 0 2rem; }
 .panel[hidden] { display: none; }
+.panel > :first-child { margin-top: 0; }
 .panel > p, .timeline { max-width: 60ch; }
 
 .timeline { list-style: none; padding: 0; }
