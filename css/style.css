@@ -23,9 +23,10 @@
   --burgundy: #521921;
   --butter: #FEFFED;
   --gold: #AF9C58;
+  --green: #2F5D3A;
   --bg: var(--butter);
-  --text: #1c1c1e;
-  --muted: #6b6b70;
+  --text: var(--burgundy);
+  --muted: rgba(82, 25, 33, 0.7);
   --line: rgba(82, 25, 33, 0.2);
 }
 
@@ -125,7 +126,7 @@ h1, h3 { font-family: var(--font-display); }
   border-bottom: 1px solid var(--line);
   font-size: var(--title-size);
   font-weight: var(--title-weight);
-  color: var(--burgundy);
+  color: var(--green);
 }
 
 .cv-group ul { margin: 0; padding: 0; list-style: none; }
@@ -145,7 +146,7 @@ h1, h3 { font-family: var(--font-display); }
   font-weight: var(--title-weight);
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: var(--burgundy);
+  color: var(--green);
 }
 
 .contact-sub {
@@ -156,7 +157,7 @@ h1, h3 { font-family: var(--font-display); }
 }
 
 .cards { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
-.card h3 { margin-top: 0; font-size: var(--title-size); font-weight: var(--title-weight); color: var(--burgundy); }
+.card h3 { margin-top: 0; font-size: var(--title-size); font-weight: var(--title-weight); color: var(--green); }
 .card p { color: var(--muted); }
 
 /* Mobil: navn til venstre og menyen stablet og høyrestilt øverst.
