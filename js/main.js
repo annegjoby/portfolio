@@ -4,6 +4,7 @@ const list = document.getElementById("project-list");
 projects.forEach((p) => {
   const card = document.createElement("article");
   card.className = "card";
+  card.dataset.cursor = "Se";
 
   const title = document.createElement("h3");
   title.textContent = p.title;

@@ -199,3 +199,61 @@ h1, h3 { font-family: var(--font-display); }
 
   body[data-view="panel"] .intro-text { display: none; }
 }
+
+/* Hele prosjektkortet er klikkbart (første lenke strekkes over kortet) */
+.card { position: relative; }
+.card a:first-of-type::after { content: ""; position: absolute; inset: 0; }
+
+/* Egen musepeker (se js/cursor.js) */
+.has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.cursor_active { opacity: 1; }
+
+.cursor__dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--bg);
+  mix-blend-mode: difference;
+  transform: scale(0.25);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cursor_hover .cursor__dot { transform: scale(0.6); }
+.cursor_down .cursor__dot { transform: scale(0.2); }
+
+.cursor_message .cursor__dot {
+  background: var(--text);
+  mix-blend-mode: normal;
+  transform: scale(1);
+}
+
+.cursor_message.cursor_down .cursor__dot { transform: scale(0.9); }
+
+.cursor__message {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.cursor_message .cursor__message { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor__dot, .cursor__message { transition: none; }
+}
