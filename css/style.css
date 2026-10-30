@@ -65,6 +65,7 @@ h1, h3 { font-family: var(--font-display); }
   height: 100vh;
   height: 100svh;
   padding: var(--pad);
+  padding-bottom: calc(var(--pad) * 0.5); /* © står litt lengre ned */
 }
 
 .logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; }
