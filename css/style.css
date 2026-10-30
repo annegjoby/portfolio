@@ -121,15 +121,15 @@ h1, h3 { font-family: var(--font-display); }
   margin: 0 0 1rem;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid var(--line);
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
 }
 
 .cv-group ul { margin: 0; padding: 0; list-style: none; }
 .cv-group li { margin-bottom: 1.1rem; line-height: 1.35; }
-.cv .date { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; }
-.cv strong { display: block; font-weight: 500; }
-.cv .sub { display: block; font-weight: 300; }
+.cv .date { display: block; margin-bottom: 0.25rem; font-size: 0.875rem; }
+.cv strong { display: block; font-size: 1.0625rem; font-weight: 500; }
+.cv .sub { display: block; font-weight: 400; }
 
 .cards { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
 .card h3 { margin-top: 0; }
