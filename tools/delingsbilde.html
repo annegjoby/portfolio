@@ -25,10 +25,11 @@
   </p>
 
   <textarea id="text">Hei, jeg heter Anne, og jobber som UX-designer i Vipps. Jeg har en master i design fra Universitetet i Oslo.</textarea>
-  <canvas id="card" width="1200" height="630"></canvas>
+  <canvas id="card" width="1200" height="420"></canvas>
   <button id="download">Last ned og.jpg</button>
 
   <script>
+    const W = 1200, H = 420; // størrelse på delingsbildet
     const canvas = document.getElementById("card");
     const input = document.getElementById("text");
 
@@ -57,23 +58,20 @@
 
       const g = canvas.getContext("2d");
       g.fillStyle = "#FEFFED";
-      g.fillRect(0, 0, 1200, 630);
+      g.fillRect(0, 0, W, H);
 
-      // Portrett til høyre. Fyller hele høyden og beskjæres etter behov (ansiktet ligger litt til høyre og oppe).
-      const px = 870, pw = 330;
-      const scale = Math.max(pw / photo.naturalWidth, 630 / photo.naturalHeight);
-      const sw = pw / scale, sh = 630 / scale;
-      const sx = (photo.naturalWidth - sw) * 0.65;
-      const sy = (photo.naturalHeight - sh) * 0.15;
-      g.drawImage(photo, sx, sy, sw, sh, px, 0, pw, 630);
+      // Portrett helt til høyre, hele bildet (ingen beskjæring) skalert til høyden
+      const pw = Math.round(photo.naturalWidth * H / photo.naturalHeight);
+      const px = W - pw;
+      g.drawImage(photo, px, 0, pw, H);
 
       // Presentasjonsteksten øverst til venstre
       g.fillStyle = "#521921";
       g.textBaseline = "alphabetic";
       g.font = '700 32px "Sporting Grotesque"';
-      const lines = wrap(g, input.value.trim(), 720);
+      const lines = wrap(g, input.value.trim(), px - 80 - 30);
       const lineHeight = 42;
-      const top = 106; // første linje, med luft over (ca. 80 px til toppen av bokstavene)
+      const top = 90; // første linje, med luft over (ca. 65 px til toppen av bokstavene)
       lines.forEach((line, i) => g.fillText(line, 80, top + i * lineHeight));
     }
 
