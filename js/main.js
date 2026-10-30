@@ -132,19 +132,13 @@ window.addEventListener("popstate", () => {
   reveal(location.hash.slice(1));
 });
 
-// Navnet er "hjem" på mobil, og presentasjonsteksten lenker til Om meg på desktop.
-// Ellers er de vanlig tekst, ikke lenker.
-const logo = document.querySelector(".logo");
+// Navnet er "hjem" (toppen på mobil, prosjekter på desktop).
+// Presentasjonsteksten lenker til Om meg på desktop, men er vanlig tekst på mobil.
 const introLink = document.querySelector(".intro-link");
 
 function syncLinks() {
-  if (mobile.matches) {
-    logo.setAttribute("href", "#hjem");
-    introLink.removeAttribute("href");
-  } else {
-    logo.removeAttribute("href");
-    introLink.setAttribute("href", "#om");
-  }
+  if (mobile.matches) introLink.removeAttribute("href");
+  else introLink.setAttribute("href", "#om");
 }
 
 mobile.addEventListener("change", () => { show(location.hash.slice(1)); syncLinks(); });
