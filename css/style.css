@@ -18,6 +18,7 @@
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Sporting Grotesque", var(--font-body);
   --pad: clamp(1.25rem, 3vw, 3rem);
+  --title-size: 1.17rem; /* overskrifter: prosjekttitler, CV-seksjoner og kontakt */
   --bg: #ffffff;
   --text: #1c1c1e;
   --muted: #6b6b70;
@@ -121,7 +122,7 @@ h1, h3 { font-family: var(--font-display); }
   margin: 0 0 1rem;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid var(--line);
-  font-size: 1rem;
+  font-size: var(--title-size);
   font-weight: 400;
 }
 
@@ -139,7 +140,7 @@ h1, h3 { font-family: var(--font-display); }
 .contact-title {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 1.7vw, 1.6rem);
+  font-size: var(--title-size);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -152,7 +153,7 @@ h1, h3 { font-family: var(--font-display); }
 }
 
 .cards { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
-.card h3 { margin-top: 0; }
+.card h3 { margin-top: 0; font-size: var(--title-size); }
 .card p { color: var(--muted); }
 
 /* Mobil: navn til venstre og menyen stablet og høyrestilt øverst.
