@@ -32,6 +32,7 @@ const panels = document.querySelectorAll(".panel");
 const navLinks = document.querySelectorAll(".site-nav a");
 const mobile = window.matchMedia("(max-width: 800px)");
 const defaultPanel = "prosjekter";
+const introText = document.querySelector(".intro-text");
 
 const isPanel = (id) => !!document.getElementById(id)?.classList.contains("panel");
 
@@ -43,6 +44,11 @@ function show(id) {
     else a.removeAttribute("aria-current");
   });
   document.body.dataset.view = id ? "panel" : "home";
+  document.body.dataset.page = id || "";
+
+  // På Om meg er presentasjonsteksten ikke lenger en lenke til siden
+  if (id === "om") introText.removeAttribute("data-cursor");
+  else introText.dataset.cursor = "Om meg";
 }
 
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
