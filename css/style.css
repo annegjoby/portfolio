@@ -71,8 +71,7 @@ h1, h3 { font-family: var(--font-display); }
 .intro-text { margin-top: 4rem; }
 
 .download {
-  display: inline-block;
-  margin-top: 1.5rem;
+  margin: 3rem 0 0;
   font-family: var(--font-display);
   font-size: 0.95rem;
 }
