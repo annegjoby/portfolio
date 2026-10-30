@@ -1,7 +1,7 @@
 // Egen musepeker, inspirert av garri.design:
 // en liten prikk som følger musen, vokser over lenker og blir en sirkel med tekst over prosjekter.
 // Kun på enheter med mus og bred skjerm. Ellers beholdes vanlig peker.
-// Pekeren er to lag (se css/style.css) som til sammen bytter burgunder og smørgul.
+// Pekeren er tre lag (se css/style.css) som sammen gjør at alt under pekeren byttes til to farger.
 const fine = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 801px)");
 
 if (fine.matches) {
@@ -14,7 +14,7 @@ if (fine.matches) {
     return layer;
   };
 
-  const layers = [makeLayer("invert"), makeLayer("tint")];
+  const layers = [makeLayer("filter"), makeLayer("multiply"), makeLayer("lighten")];
   const message = layers[0].querySelector(".cursor__message");
   const toggle = (name, on) => layers.forEach((l) => l.classList.toggle(name, on));
 

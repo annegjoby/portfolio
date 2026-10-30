@@ -212,11 +212,13 @@ h1, h3 { font-family: var(--font-display); }
 .card a:first-of-type::after { content: ""; position: absolute; inset: 0; }
 
 /* Egen musepeker (se js/cursor.js).
-   Pekeren er to lag som ligger oppå hverandre:
-   1) en hvit sirkel med «difference», som inverterer det som ligger under
-   2) en sirkel med fargen (81, 25, 15) og «plus-lighter», som legger til en fast farge
-   Til sammen bytter de plass på burgunder (#521921) og smørgul (#FEFFED):
-   pekeren blir smørgul på venstre side og burgunder på høyre side, og teksten under byttes også. */
+   Pekeren er tre lag som ligger oppå hverandre og sammen gjør at alt under pekeren byttes til to farger:
+   1) «filter»: gjør det som ligger under om til svart/hvitt. Alt lyst (smørgul bakgrunn) blir svart,
+      alt annet (burgunder, gull, og burgunder bakgrunn på venstre side) blir hvitt.
+   2) «multiply» med smørgul: hvitt blir smørgul, svart forblir svart.
+   3) «lighten» med burgunder: svart blir burgunder, smørgul forblir smørgul.
+   Resultat: over smørgul bakgrunn er pekeren burgunder, over alt annet er den smørgul,
+   og tekst under pekeren bytter dermed til motsatt farge, også gull. */
 .has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
 
 .cursor {
@@ -225,19 +227,10 @@ h1, h3 { font-family: var(--font-display); }
   left: 0;
   z-index: 1000;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s;
 }
 
-.cursor_active { opacity: 1; }
-
-/* Blend må ligge på det ytterste elementet for å blande mot siden under */
-.cursor--invert { mix-blend-mode: difference; }
-.cursor--tint { display: none; z-index: 1001; }
-
-@supports (mix-blend-mode: plus-lighter) {
-  .cursor--tint { display: block; mix-blend-mode: plus-lighter; }
-}
+.cursor--multiply { z-index: 1001; mix-blend-mode: multiply; }
+.cursor--lighten { z-index: 1002; mix-blend-mode: lighten; }
 
 .cursor__dot {
   display: flex;
@@ -247,32 +240,50 @@ h1, h3 { font-family: var(--font-display); }
   height: 80px;
   margin: -40px 0 0 -40px;
   border-radius: 50%;
-  transform: scale(0.25);
+  transform: scale(0);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.cursor--invert .cursor__dot { background: #fff; }
-.cursor--tint .cursor__dot { background: rgb(81, 25, 15); }
+.cursor--filter .cursor__dot {
+  -webkit-backdrop-filter: grayscale(1) brightness(0.625) contrast(12) invert(1);
+  backdrop-filter: grayscale(1) brightness(0.625) contrast(12) invert(1);
+}
 
-.cursor_hover .cursor__dot { transform: scale(0.6); }
-.cursor_down .cursor__dot { transform: scale(0.2); }
+/* Lag 2 og 3 er litt større enn lag 1, så kanten av sirkelen ikke får en mørk kant */
+.cursor--multiply .cursor__dot,
+.cursor--lighten .cursor__dot { width: 88px; height: 88px; margin: -44px 0 0 -44px; }
 
-/* Sirkel med tekst (over prosjekter og presentasjonen): helt dekkende, ingen blanding */
-.cursor_message.cursor--invert { mix-blend-mode: normal; }
-.cursor_message.cursor--tint { display: none; }
+.cursor--multiply .cursor__dot { background: var(--butter); }
+.cursor--lighten .cursor__dot { background: var(--burgundy); }
 
-.cursor_message .cursor__dot {
+.cursor_active .cursor__dot { transform: scale(0.25); }
+.cursor_active.cursor_hover .cursor__dot { transform: scale(0.6); }
+.cursor_active.cursor_down .cursor__dot { transform: scale(0.2); }
+
+/* Sirkel med tekst (over prosjekter og presentasjonen): helt dekkende, ingen filter */
+.cursor_message.cursor--multiply, .cursor_message.cursor--lighten { display: none; }
+
+.cursor_active.cursor_message .cursor__dot {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   background: var(--burgundy);
   color: var(--butter);
   transform: scale(1);
 }
 
-.cursor_message.cursor_left .cursor__dot {
+.cursor_active.cursor_message.cursor_left .cursor__dot {
   background: var(--butter);
   color: var(--burgundy);
 }
 
-.cursor_message.cursor_down .cursor__dot { transform: scale(0.9); }
+.cursor_active.cursor_message.cursor_down .cursor__dot { transform: scale(0.9); }
+
+/* Nettlesere uten backdrop-filter får en enkel, ensfarget peker */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .cursor--multiply, .cursor--lighten { display: none; }
+  .cursor--filter .cursor__dot { background: var(--burgundy); }
+  .cursor--filter.cursor_left .cursor__dot { background: var(--butter); }
+}
 
 .cursor__message {
   font-family: var(--font-display);
