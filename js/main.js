@@ -1,4 +1,4 @@
-// Prosjektkort fra projects.js
+// Prosjektkort fra projects.js. Hvert kort lenker til prosjektsiden (#prosjekter/<slug>).
 const list = document.getElementById("project-list");
 
 projects.forEach((p) => {
@@ -12,65 +12,128 @@ projects.forEach((p) => {
   const desc = document.createElement("p");
   desc.textContent = p.description;
 
-  const links = document.createElement("p");
-  p.links.forEach((l, i) => {
-    if (i > 0) links.append(" · ");
-    const a = document.createElement("a");
-    a.href = l.url;
-    a.textContent = l.label;
-    links.append(a);
-  });
+  const link = document.createElement("p");
+  const a = document.createElement("a");
+  a.href = `#prosjekter/${p.slug}`;
+  a.textContent = "Les casen";
+  link.append(a);
 
-  card.append(title, desc, links);
+  card.append(title, desc, link);
   list.append(card);
 });
 
-// Bytt innhold basert på menyvalg.
-// Desktop: høyre side viser alltid en side (starter med prosjekter).
-// Mobil: uten valgt side vises bare presentasjonen ("hjem").
+// Prosjektside: tittel, fakta, tekst og bilder for ett prosjekt
+const detail = document.getElementById("project-detail");
+
+function renderProject(p) {
+  const back = document.createElement("a");
+  back.className = "back";
+  back.href = "#prosjekter";
+  back.textContent = "← Prosjekter";
+
+  const title = document.createElement("h3");
+  title.className = "detail-title";
+  title.textContent = p.title;
+
+  const lead = document.createElement("p");
+  lead.className = "detail-lead";
+  lead.textContent = p.description;
+
+  const facts = document.createElement("p");
+  facts.className = "detail-facts";
+  facts.textContent = [p.year, p.role].filter(Boolean).join(" · ");
+
+  const body = (p.body || []).map((text) => {
+    const para = document.createElement("p");
+    para.textContent = text;
+    return para;
+  });
+
+  const images = (p.images || []).map((src) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "";
+    img.loading = "lazy";
+    return img;
+  });
+
+  detail.replaceChildren(back, title, lead, facts, ...body, ...images);
+}
+
+// Hva adressen betyr:
+//   #prosjekter          liste over prosjekter
+//   #prosjekter/<slug>   ett prosjekt
+//   #om, #kontakt        egne sider på desktop, deler av hjem-siden på mobil
+//   (tom)                desktop: prosjekter. Mobil: hjem (presentasjon, bilde, kontakt og CV).
 const panels = document.querySelectorAll(".panel");
 const navLinks = document.querySelectorAll(".site-nav a");
 const mobile = window.matchMedia("(max-width: 800px)");
-const defaultPanel = "prosjekter";
 const introText = document.querySelector(".intro-text");
 
-const isPanel = (id) => !!document.getElementById(id)?.classList.contains("panel");
-
-function show(id) {
-  if (!isPanel(id)) id = mobile.matches ? null : defaultPanel;
-  panels.forEach((p) => { p.hidden = p.id !== id; });
-  navLinks.forEach((a) => {
-    if (id && a.hash === `#${id}`) a.setAttribute("aria-current", "page");
-    else a.removeAttribute("aria-current");
-  });
-  document.body.dataset.view = id ? "panel" : "home";
-  document.body.dataset.page = id || "";
-
-  // På Om meg er presentasjonsteksten ikke lenger en lenke til siden
-  if (id === "om") introText.removeAttribute("data-cursor");
-  else introText.dataset.cursor = "Om meg";
+function parse(hash) {
+  const [base, slug] = hash.split("/");
+  const project = projects.find((p) => p.slug === slug);
+  if (base === "prosjekter" && project) return { view: "prosjekt", project };
+  if (base === "prosjekter" && !slug) return { view: "prosjekter" };
+  if (base === "om" || base === "kontakt") return { view: base };
+  return { view: null };
 }
 
-document.querySelectorAll('a[href^="#"]').forEach((a) => {
-  a.addEventListener("click", (e) => {
-    e.preventDefault();
-    const id = a.hash.slice(1);
-    history.pushState(null, "", isPanel(id) ? a.hash : location.pathname);
-    show(id);
-    window.scrollTo(0, 0);
+function show(hash) {
+  const { view, project } = parse(hash);
+
+  // Hvilke paneler som vises
+  let visible;
+  if (mobile.matches) {
+    visible = view === "prosjekter" || view === "prosjekt" ? [view] : ["om", "kontakt"];
+  } else {
+    visible = [view || "prosjekter"];
+  }
+  if (project) renderProject(project);
+  panels.forEach((p) => { p.hidden = !visible.includes(p.id); });
+
+  // Valgt menypunkt
+  const current = view === "prosjekt" ? "prosjekter" : view;
+  navLinks.forEach((a) => {
+    if (a.hash.slice(1) === (current || (mobile.matches ? "" : "prosjekter"))) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
   });
+
+  document.body.dataset.view = mobile.matches && visible.includes("om") ? "home" : "panel";
+  document.body.dataset.page = mobile.matches ? "" : visible[0];
+
+  // På Om meg er presentasjonsteksten ikke lenger en lenke til siden
+  if (!mobile.matches && visible[0] !== "om") introText.dataset.cursor = "Om meg";
+  else introText.removeAttribute("data-cursor");
+}
+
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  e.preventDefault();
+  const hash = a.hash.slice(1);
+  history.pushState(null, "", parse(hash).view ? a.hash : location.pathname);
+  show(hash);
+  window.scrollTo(0, 0);
 });
 
 window.addEventListener("popstate", () => show(location.hash.slice(1)));
 
-// Navnet er "hjem" på mobil. På desktop er det vanlig tekst, ikke en lenke.
+// Navnet er "hjem" på mobil, og presentasjonsteksten lenker til Om meg på desktop.
+// Ellers er de vanlig tekst, ikke lenker.
 const logo = document.querySelector(".logo");
-function syncLogo() {
-  if (mobile.matches) logo.setAttribute("href", "#hjem");
-  else logo.removeAttribute("href");
+const introLink = document.querySelector(".intro-link");
+
+function syncLinks() {
+  if (mobile.matches) {
+    logo.setAttribute("href", "#hjem");
+    introLink.removeAttribute("href");
+  } else {
+    logo.removeAttribute("href");
+    introLink.setAttribute("href", "#om");
+  }
 }
 
-mobile.addEventListener("change", () => { show(location.hash.slice(1)); syncLogo(); });
+mobile.addEventListener("change", () => { show(location.hash.slice(1)); syncLinks(); });
 show(location.hash.slice(1));
-syncLogo();
-
+syncLinks();
