@@ -18,7 +18,7 @@
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: "Sporting Grotesque", var(--font-body);
   --pad: clamp(1.25rem, 3vw, 3rem);
-  --title-size: 1.17rem; /* overskrifter: prosjekttitler, CV-seksjoner og kontakt */
+  --title-size: 1.125rem; /* overskrifter: prosjekttitler, CV-seksjoner og kontakt */
   --bg: #ffffff;
   --text: #1c1c1e;
   --muted: #6b6b70;
