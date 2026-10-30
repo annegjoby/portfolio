@@ -27,4 +27,4 @@ LinkedIns Post Inspector for å hente en ny.
 ## Ikoner
 
 `assets/favicon.svg`, `assets/favicon-32.png` og `assets/apple-touch-icon.png`:
-smørgul bakgrunn med en burgunder prikk (som musepekeren).
+burgunder bakgrunn med en smørgul prikk.
