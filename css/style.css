@@ -118,7 +118,8 @@ body[data-page="om"] .intro-photo { display: block; }
 }
 
 .site-nav a { text-decoration: none; color: var(--olive); }
-.nav-short { display: none; }
+/* Seksjonstitler vises bare på mobil, der alt ligger på én side */
+.section-title { display: none; }
 .site-nav a[aria-current="page"] { color: var(--burgundy); }
 
 .panel { padding: 3rem 0 2rem; }
@@ -180,12 +181,12 @@ body[data-page="om"] .intro-photo { display: block; }
 #project-detail p { max-width: 60ch; }
 #project-detail img { display: block; width: 100%; height: auto; margin: 1.5rem 0; }
 
-/* Mobil: fast topplinje med navnet til venstre og «Prosjekter» til høyre.
-   Hjem (navnet) er én side: presentasjon, bilde, kontakt og CV. «Prosjekter» åpner prosjektene. */
+/* Mobil: fast topplinje med navnet. Hjem er én lang side:
+   presentasjon, bilde, prosjekter, CV og kontakt, hver med egen tittel. */
 @media (max-width: 800px) {
   :root { --header-h: 3.5rem; }
 
-  /* Fast stripe bak navn og meny, så innholdet ikke vises gjennom når man scroller */
+  /* Fast stripe bak navnet, så innholdet ikke vises gjennom når man scroller */
   body::before {
     content: "";
     position: fixed;
@@ -205,36 +206,36 @@ body[data-page="om"] .intro-photo { display: block; }
 
   .intro, .content { display: contents; }
 
-  .logo, .site-nav {
+  /* Ingen meny på mobil. Navnet øverst tar deg til toppen av siden. */
+  .site-nav { display: none; }
+
+  .logo {
     position: fixed;
     top: 0;
+    left: var(--pad);
     height: var(--header-h);
     display: flex;
     align-items: center;
     z-index: 20;
+    font-size: 0.9375rem;
   }
-
-  .logo { left: var(--pad); }
-
-  .site-nav {
-    right: var(--pad);
-    padding: 0;
-    background: none;
-  }
-
-  /* Kompakt meny som hopper til delene av siden. «Om meg» heter «CV» her. */
-  .logo { font-size: 0.75rem; }
-  .site-nav { gap: 0.75rem; font-size: 0.75rem; }
-  .site-nav a { position: relative; padding: 1rem 0; }
-  .site-nav a::after { content: ""; position: absolute; inset: 0 -0.4rem; } /* større trykkflate */
-  .nav-full { display: none; }
-  .nav-short { display: inline; }
 
   .intro-text { order: 1; margin-top: 0; }
   .intro h1 { max-width: none; font-size: 1.5rem; }
 
   main { order: 2; }
-  .panel { padding: 3rem 0 0; scroll-margin-top: var(--header-h); }
+  .panel { padding: 4.5rem 0 0; scroll-margin-top: var(--header-h); }
+
+  .section-title {
+    display: block;
+    margin: 0 0 1.75rem;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: var(--title-weight);
+    line-height: 1.2;
+    color: var(--burgundy);
+  }
+
   body[data-view="panel"] .panel { padding-top: 0.5rem; }
   .cv { grid-template-columns: 1fr; gap: 2.5rem; }
 
@@ -243,16 +244,6 @@ body[data-page="om"] .intro-photo { display: block; }
   /* Portrett på hjem-siden */
   body[data-view="home"] .intro-photo { display: block; width: min(60vw, 240px); height: auto; }
   body[data-view="panel"] .intro-text { display: none; }
-}
-
-/* Smale telefoner: tettere meny, og under 350 px bare «Prosjekter», så navnet får plass */
-@media (max-width: 365px) {
-  .site-nav { gap: 0.5rem; }
-}
-
-/* Svært smale telefoner: bare «Prosjekter» i menyen */
-@media (max-width: 350px) {
-  .site-nav a[href="#om"], .site-nav a[href="#kontakt"] { display: none; }
 }
 
 /* Hele prosjektkortet er klikkbart (første lenke strekkes over kortet) */
