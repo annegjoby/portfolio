@@ -22,7 +22,7 @@
   --title-weight: 400;
   --burgundy: #521921;
   --butter: #FEFFED;
-  --gold: #AF9C58;
+  --olive: #886F0B;
   --bg: var(--butter);
   --text: var(--burgundy);
   --muted: rgba(82, 25, 33, 0.7);
@@ -105,7 +105,7 @@ h1, h3 { font-family: var(--font-display); }
   font-family: var(--font-display);
 }
 
-.site-nav a { text-decoration: none; color: var(--gold); }
+.site-nav a { text-decoration: none; color: var(--olive); }
 .site-nav a[aria-current="page"] { color: var(--burgundy); }
 
 .panel { padding: 3rem 0 2rem; }
@@ -125,7 +125,7 @@ h1, h3 { font-family: var(--font-display); }
   border-bottom: 1px solid var(--line);
   font-size: var(--title-size);
   font-weight: var(--title-weight);
-  color: var(--gold);
+  color: var(--olive);
 }
 
 .cv-group ul { margin: 0; padding: 0; list-style: none; }
@@ -145,7 +145,7 @@ h1, h3 { font-family: var(--font-display); }
   font-weight: var(--title-weight);
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: var(--gold);
+  color: var(--olive);
 }
 
 .contact-sub {
@@ -156,7 +156,7 @@ h1, h3 { font-family: var(--font-display); }
 }
 
 .cards { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
-.card h3 { margin-top: 0; font-size: var(--title-size); font-weight: var(--title-weight); color: var(--gold); }
+.card h3 { margin-top: 0; font-size: var(--title-size); font-weight: var(--title-weight); color: var(--olive); }
 .card p { color: var(--muted); }
 
 /* Mobil: navn til venstre og menyen stablet og høyrestilt øverst.
@@ -214,11 +214,11 @@ h1, h3 { font-family: var(--font-display); }
 /* Egen musepeker (se js/cursor.js).
    Pekeren er tre lag som ligger oppå hverandre og sammen gjør at alt under pekeren byttes til to farger:
    1) «filter»: gjør det som ligger under om til svart/hvitt. Alt lyst (smørgul bakgrunn) blir svart,
-      alt annet (burgunder, gull, og burgunder bakgrunn på venstre side) blir hvitt.
+      alt annet (burgunder, olivengrønn, og burgunder bakgrunn på venstre side) blir hvitt.
    2) «multiply» med smørgul: hvitt blir smørgul, svart forblir svart.
    3) «lighten» med burgunder: svart blir burgunder, smørgul forblir smørgul.
    Resultat: over smørgul bakgrunn er pekeren burgunder, over alt annet er den smørgul,
-   og tekst under pekeren bytter dermed til motsatt farge, også gull. */
+   og tekst under pekeren bytter dermed til motsatt farge, også olivengrønn. */
 .has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
 
 .cursor {
