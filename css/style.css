@@ -282,6 +282,15 @@ body[data-page="om"] .intro-photo { display: block; }
 
 .cursor_active.cursor_message.cursor_down .cursor__dot { transform: scale(0.9); }
 
+/* Over portrettet er pekeren ensfarget burgunder, uten filter */
+.cursor_solid.cursor--multiply, .cursor_solid.cursor--lighten { display: none; }
+
+.cursor_solid.cursor--filter .cursor__dot {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: var(--burgundy);
+}
+
 /* Nettlesere uten backdrop-filter får en enkel, ensfarget peker */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .cursor--multiply, .cursor--lighten { display: none; }
