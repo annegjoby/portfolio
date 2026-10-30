@@ -135,7 +135,6 @@ h1, h3 { font-family: var(--font-display); }
 
 /* Kontakt: store lenker */
 .contact-link { display: block; margin-bottom: 2.5rem; text-decoration: none; }
-.contact-link:hover { opacity: 0.65; }
 
 /* Samme størrelse som presentasjonsteksten til venstre */
 .contact-title {
