@@ -150,6 +150,7 @@ h1, h3 { font-family: var(--font-display); }
 .contact-sub {
   display: block;
   margin-top: 0.25rem;
+  font-weight: 300;
   overflow-wrap: anywhere;
 }
 
