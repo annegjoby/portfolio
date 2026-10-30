@@ -59,17 +59,19 @@
       g.fillStyle = "#FEFFED";
       g.fillRect(0, 0, 1200, 630);
 
-      // Portrett til høyre (beskjæres til høyden)
-      const px = 760, pw = 440;
-      const sh = photo.naturalWidth * 630 / pw;
-      const sy = Math.max(0, (photo.naturalHeight - sh) * 0.15);
-      g.drawImage(photo, 0, sy, photo.naturalWidth, sh, px, 0, pw, 630);
+      // Portrett til høyre. Fyller hele høyden og beskjæres etter behov (ansiktet ligger litt til høyre og oppe).
+      const px = 870, pw = 330;
+      const scale = Math.max(pw / photo.naturalWidth, 630 / photo.naturalHeight);
+      const sw = pw / scale, sh = 630 / scale;
+      const sx = (photo.naturalWidth - sw) * 0.65;
+      const sy = (photo.naturalHeight - sh) * 0.15;
+      g.drawImage(photo, sx, sy, sw, sh, px, 0, pw, 630);
 
       // Presentasjonsteksten øverst til venstre
       g.fillStyle = "#521921";
       g.textBaseline = "alphabetic";
       g.font = '700 32px "Sporting Grotesque"';
-      const lines = wrap(g, input.value.trim(), 640);
+      const lines = wrap(g, input.value.trim(), 720);
       const lineHeight = 42;
       const top = 106; // første linje, med luft over (ca. 80 px til toppen av bokstavene)
       lines.forEach((line, i) => g.fillText(line, 80, top + i * lineHeight));
