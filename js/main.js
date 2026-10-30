@@ -59,4 +59,3 @@ window.addEventListener("popstate", () => show(location.hash.slice(1)));
 mobile.addEventListener("change", () => show(location.hash.slice(1)));
 show(location.hash.slice(1));
 
-document.getElementById("year").textContent = new Date().getFullYear();
