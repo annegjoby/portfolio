@@ -13,19 +13,49 @@ if (fine.matches) {
   const message = cursor.querySelector(".cursor__message");
   document.documentElement.classList.add("has-cursor");
 
-  document.addEventListener("pointermove", (e) => {
-    cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    cursor.classList.add("cursor_active");
+  let x = 0;
+  let y = 0;
+  let frame = 0;
 
-    const target = e.target.closest("[data-cursor], a, button");
-    const label = e.target.closest("[data-cursor]")?.dataset.cursor;
+  // Setter utseendet ut fra hva som ligger under pekeren akkurat nå
+  function render() {
+    frame = 0;
+    cursor.style.transform = `translate(${x}px, ${y}px)`;
 
-    cursor.classList.toggle("cursor_hover", !!target);
+    const el = document.elementFromPoint(x, y);
+    const hit = el?.closest("[data-cursor], a, button");
+    const label = el?.closest("[data-cursor]")?.dataset.cursor;
+
+    cursor.classList.toggle("cursor_hover", !!hit);
     cursor.classList.toggle("cursor_message", !!label);
     message.textContent = label || "";
+  }
+
+  const schedule = () => { frame ||= requestAnimationFrame(render); };
+
+  document.addEventListener("pointermove", (e) => {
+    x = e.clientX;
+    y = e.clientY;
+    cursor.classList.add("cursor_active");
+    schedule();
   });
 
-  document.documentElement.addEventListener("pointerleave", () => cursor.classList.remove("cursor_active"));
+  // Innholdet kan endre seg under en stillestående peker (menyvalg, scrolling, tilbakeknapp)
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("popstate", schedule);
+  document.addEventListener("click", () => requestAnimationFrame(schedule));
+
+  const release = () => cursor.classList.remove("cursor_down");
+  const hide = () => { release(); cursor.classList.remove("cursor_active"); };
+
   document.addEventListener("pointerdown", () => cursor.classList.add("cursor_down"));
-  document.addEventListener("pointerup", () => cursor.classList.remove("cursor_down"));
+  document.addEventListener("pointerup", release);
+  document.addEventListener("pointercancel", release);
+  document.addEventListener("dragstart", release);
+
+  // Når siden mister fokus (mailto, ny fane) kommer ikke alltid pointerup
+  window.addEventListener("blur", hide);
+  document.addEventListener("visibilitychange", hide);
+  document.documentElement.addEventListener("pointerleave", hide);
+  document.documentElement.addEventListener("mouseleave", hide);
 }
