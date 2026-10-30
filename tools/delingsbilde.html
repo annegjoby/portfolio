@@ -25,11 +25,11 @@
   </p>
 
   <textarea id="text">Hei, jeg heter Anne, og jobber som UX-designer i Vipps. Jeg har en master i design fra Universitetet i Oslo.</textarea>
-  <canvas id="card" width="1200" height="420"></canvas>
+  <canvas id="card" width="1200" height="630"></canvas>
   <button id="download">Last ned og.jpg</button>
 
   <script>
-    const W = 1200, H = 420; // størrelse på delingsbildet
+    const W = 1200, H = 630; // standard størrelse for delingsbilder (ca. 1,9:1)
     const canvas = document.getElementById("card");
     const input = document.getElementById("text");
 
@@ -51,7 +51,7 @@
     }
 
     async function draw() {
-      await document.fonts.load('700 32px "Sporting Grotesque"');
+      await document.fonts.load('700 38px "Sporting Grotesque"');
       const photo = new Image();
       photo.src = "../assets/anne.jpg";
       await photo.decode();
@@ -60,18 +60,22 @@
       g.fillStyle = "#FEFFED";
       g.fillRect(0, 0, W, H);
 
-      // Portrett helt til høyre, hele bildet (ingen beskjæring) skalert til høyden
-      const pw = Math.round(photo.naturalWidth * H / photo.naturalHeight);
+      // Portrett til høyre. Fyller hele høyden; beskjæres bare noen få piksler på sidene.
+      const pw = 440;
       const px = W - pw;
-      g.drawImage(photo, px, 0, pw, H);
+      const scale = Math.max(pw / photo.naturalWidth, H / photo.naturalHeight);
+      const sw = pw / scale, sh = H / scale;
+      const sx = (photo.naturalWidth - sw) * 0.65;
+      const sy = (photo.naturalHeight - sh) * 0.15;
+      g.drawImage(photo, sx, sy, sw, sh, px, 0, pw, H);
 
       // Presentasjonsteksten øverst til venstre
       g.fillStyle = "#521921";
       g.textBaseline = "alphabetic";
-      g.font = '700 32px "Sporting Grotesque"';
-      const lines = wrap(g, input.value.trim(), px - 80 - 30);
-      const lineHeight = 42;
-      const top = 90; // første linje, med luft over (ca. 65 px til toppen av bokstavene)
+      g.font = '700 38px "Sporting Grotesque"';
+      const lines = wrap(g, input.value.trim(), px - 80 - 40);
+      const lineHeight = 48;
+      const top = 108; // første linje, med luft over (ca. 80 px til toppen av bokstavene)
       lines.forEach((line, i) => g.fillText(line, 80, top + i * lineHeight));
     }
 
