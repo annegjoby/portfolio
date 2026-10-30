@@ -21,6 +21,7 @@
   --bg: #ffffff;
   --text: #1c1c1e;
   --muted: #6b6b70;
+  --line: #d9d9dc;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,6 +29,7 @@
     --bg: #121214;
     --text: #ececef;
     --muted: #9a9aa2;
+    --line: #2c2c32;
   }
 }
 
@@ -93,12 +95,27 @@ h1, h3 { font-family: var(--font-display); }
 .panel { padding: 4rem 0 2rem; }
 .panel[hidden] { display: none; }
 .panel > :first-child { margin-top: 0; }
-.panel > p, .timeline { max-width: 60ch; }
+.panel > p { max-width: 60ch; }
 
-.timeline { list-style: none; padding: 0; }
-.timeline li { margin-bottom: 1rem; }
-.timeline span { color: var(--muted); margin-left: 0.5rem; }
-.timeline p { margin: 0.2rem 0 0; }
+/* CV: to kolonner med korte rader (dato, tittel, sted) */
+.cv { display: grid; grid-template-columns: 1fr 1fr; gap: 0 3rem; align-items: start; }
+.cv-col { display: flex; flex-direction: column; gap: 2.5rem; }
+
+/* .panel gjelder også de nestede <section>-ene, så nullstill padding */
+.cv-group { padding: 0; }
+.cv-group h3 {
+  margin: 0 0 1rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.cv-group ul { margin: 0; padding: 0; list-style: none; }
+.cv-group li { margin-bottom: 1.1rem; line-height: 1.35; }
+.cv .date { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; }
+.cv strong { display: block; font-weight: 500; }
+.cv .sub { display: block; font-weight: 300; }
 
 .cards { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
 .card h3 { margin-top: 0; }
@@ -136,6 +153,7 @@ h1, h3 { font-family: var(--font-display); }
   }
 
   main { grid-column: 1 / -1; grid-row: 2; }
+  .cv { grid-template-columns: 1fr; gap: 2.5rem; }
   .panel { padding-top: 2.5rem; }
 
   .copyright { grid-column: 1 / -1; grid-row: 3; margin-top: 2.5rem; }
