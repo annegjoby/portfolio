@@ -50,7 +50,7 @@
     }
 
     async function draw() {
-      await document.fonts.load('700 38px "Sporting Grotesque"');
+      await document.fonts.load('700 32px "Sporting Grotesque"');
       const photo = new Image();
       photo.src = "../assets/anne.jpg";
       await photo.decode();
@@ -65,13 +65,13 @@
       const sy = Math.max(0, (photo.naturalHeight - sh) * 0.15);
       g.drawImage(photo, 0, sy, photo.naturalWidth, sh, px, 0, pw, 630);
 
-      // Presentasjonsteksten til venstre, midtstilt vertikalt
+      // Presentasjonsteksten øverst til venstre
       g.fillStyle = "#521921";
       g.textBaseline = "alphabetic";
-      g.font = '700 38px "Sporting Grotesque"';
-      const lines = wrap(g, input.value.trim(), 620);
-      const lineHeight = 48;
-      const top = 315 - (lines.length * lineHeight) / 2 + 33;
+      g.font = '700 32px "Sporting Grotesque"';
+      const lines = wrap(g, input.value.trim(), 640);
+      const lineHeight = 42;
+      const top = 106; // første linje, med luft over (ca. 80 px til toppen av bokstavene)
       lines.forEach((line, i) => g.fillText(line, 80, top + i * lineHeight));
     }
 
