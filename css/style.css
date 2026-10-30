@@ -146,7 +146,7 @@ h1, h3 { font-family: var(--font-display); }
   font-weight: var(--title-weight);
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: var(--olive);
+  color: var(--burgundy);
 }
 
 .contact-sub {
