@@ -1,16 +1,23 @@
 // Egen musepeker, inspirert av garri.design:
 // en liten prikk som følger musen, vokser over lenker og blir en sirkel med tekst over prosjekter.
 // Kun på enheter med mus og bred skjerm. Ellers beholdes vanlig peker.
+// Pekeren er to lag (se css/style.css) som til sammen bytter burgunder og smørgul.
 const fine = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 801px)");
 
 if (fine.matches) {
-  const cursor = document.createElement("div");
-  cursor.className = "cursor";
-  cursor.setAttribute("aria-hidden", "true");
-  cursor.innerHTML = '<div class="cursor__dot"><span class="cursor__message"></span></div>';
-  document.body.append(cursor);
+  const makeLayer = (name) => {
+    const layer = document.createElement("div");
+    layer.className = `cursor cursor--${name}`;
+    layer.setAttribute("aria-hidden", "true");
+    layer.innerHTML = '<div class="cursor__dot"><span class="cursor__message"></span></div>';
+    document.body.append(layer);
+    return layer;
+  };
 
-  const message = cursor.querySelector(".cursor__message");
+  const layers = [makeLayer("invert"), makeLayer("tint")];
+  const message = layers[0].querySelector(".cursor__message");
+  const toggle = (name, on) => layers.forEach((l) => l.classList.toggle(name, on));
+
   document.documentElement.classList.add("has-cursor");
 
   let x = 0;
@@ -20,14 +27,15 @@ if (fine.matches) {
   // Setter utseendet ut fra hva som ligger under pekeren akkurat nå
   function render() {
     frame = 0;
-    cursor.style.transform = `translate(${x}px, ${y}px)`;
+    layers.forEach((l) => { l.style.transform = `translate(${x}px, ${y}px)`; });
 
     const el = document.elementFromPoint(x, y);
     const hit = el?.closest("[data-cursor], a[href], button");
     const label = el?.closest("[data-cursor]")?.dataset.cursor;
 
-    cursor.classList.toggle("cursor_hover", !!hit);
-    cursor.classList.toggle("cursor_message", !!label);
+    toggle("cursor_hover", !!hit);
+    toggle("cursor_message", !!label);
+    toggle("cursor_left", !!el?.closest(".intro"));
     message.textContent = label || "";
   }
 
@@ -36,7 +44,7 @@ if (fine.matches) {
   document.addEventListener("pointermove", (e) => {
     x = e.clientX;
     y = e.clientY;
-    cursor.classList.add("cursor_active");
+    toggle("cursor_active", true);
     schedule();
   });
 
@@ -45,10 +53,10 @@ if (fine.matches) {
   window.addEventListener("popstate", schedule);
   document.addEventListener("click", () => requestAnimationFrame(schedule));
 
-  const release = () => cursor.classList.remove("cursor_down");
-  const hide = () => { release(); cursor.classList.remove("cursor_active"); };
+  const release = () => toggle("cursor_down", false);
+  const hide = () => { release(); toggle("cursor_active", false); };
 
-  document.addEventListener("pointerdown", () => cursor.classList.add("cursor_down"));
+  document.addEventListener("pointerdown", () => toggle("cursor_down", true));
   document.addEventListener("pointerup", release);
   document.addEventListener("pointercancel", release);
   document.addEventListener("dragstart", release);

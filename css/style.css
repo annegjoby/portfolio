@@ -20,19 +20,13 @@
   --pad: clamp(1.25rem, 3vw, 3rem);
   --title-size: 1.125rem; /* overskrifter: prosjekttitler, CV-seksjoner og kontakt */
   --title-weight: 400;
-  --bg: #ffffff;
+  --burgundy: #521921;
+  --butter: #FEFFED;
+  --gold: #AF9C58;
+  --bg: var(--butter);
   --text: #1c1c1e;
   --muted: #6b6b70;
-  --line: #d9d9dc;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #121214;
-    --text: #ececef;
-    --muted: #9a9aa2;
-    --line: #2c2c32;
-  }
+  --line: rgba(82, 25, 33, 0.2);
 }
 
 * { box-sizing: border-box; }
@@ -45,15 +39,16 @@ body {
   color: var(--text);
 }
 
-a { color: var(--text); }
+a { color: inherit; }
 h1, h3 { font-family: var(--font-display); }
 
-/* To kolonner: 40 / 60 */
+/* To kolonner: 40 / 60. Venstre er burgunder, høyre er smørgul. */
 .split {
   display: grid;
   grid-template-columns: 2fr 3fr;
   min-height: 100vh;
   min-height: 100svh;
+  background: linear-gradient(to right, var(--burgundy) 40%, var(--butter) 40%);
 }
 
 /* Venstre: presentasjon, står stille mens høyre side scroller */
@@ -66,6 +61,7 @@ h1, h3 { font-family: var(--font-display); }
   height: 100svh;
   padding: var(--pad);
   padding-bottom: calc(var(--pad) * 0.5); /* © står litt lengre ned */
+  color: var(--butter);
 }
 
 .logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; }
@@ -91,7 +87,7 @@ h1, h3 { font-family: var(--font-display); }
   letter-spacing: -0.02em;
 }
 
-.copyright { margin: auto 0 0; font-family: var(--font-display); font-size: 0.9rem; color: var(--muted); }
+.copyright { margin: auto 0 0; font-family: var(--font-display); font-size: 0.9rem; color: inherit; opacity: 0.7; }
 
 /* Høyre: meny og skiftende innhold */
 .content { padding: 0 var(--pad) var(--pad); }
@@ -102,15 +98,15 @@ h1, h3 { font-family: var(--font-display); }
   top: 0;
   z-index: 5;
   padding: var(--pad) 0 1rem;
-  background: var(--bg);
+  background: var(--butter);
   display: flex;
   justify-content: flex-end;
   gap: 1.5rem;
   font-family: var(--font-display);
 }
 
-.site-nav a { text-decoration: none; color: var(--muted); }
-.site-nav a[aria-current="page"] { color: var(--text); }
+.site-nav a { text-decoration: none; color: var(--gold); }
+.site-nav a[aria-current="page"] { color: var(--burgundy); }
 
 .panel { padding: 3rem 0 2rem; }
 .panel[hidden] { display: none; }
@@ -129,6 +125,7 @@ h1, h3 { font-family: var(--font-display); }
   border-bottom: 1px solid var(--line);
   font-size: var(--title-size);
   font-weight: var(--title-weight);
+  color: var(--burgundy);
 }
 
 .cv-group ul { margin: 0; padding: 0; list-style: none; }
@@ -148,6 +145,7 @@ h1, h3 { font-family: var(--font-display); }
   font-weight: var(--title-weight);
   line-height: 1.2;
   letter-spacing: -0.02em;
+  color: var(--burgundy);
 }
 
 .contact-sub {
@@ -158,7 +156,7 @@ h1, h3 { font-family: var(--font-display); }
 }
 
 .cards { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
-.card h3 { margin-top: 0; font-size: var(--title-size); font-weight: var(--title-weight); }
+.card h3 { margin-top: 0; font-size: var(--title-size); font-weight: var(--title-weight); color: var(--burgundy); }
 .card p { color: var(--muted); }
 
 /* Mobil: navn til venstre og menyen stablet og høyrestilt øverst.
@@ -178,6 +176,7 @@ h1, h3 { font-family: var(--font-display); }
   .site-nav {
     position: static;
     padding: 0;
+    background: none;
     grid-column: 2;
     grid-row: 1;
     flex-direction: column;
@@ -201,13 +200,23 @@ h1, h3 { font-family: var(--font-display); }
   .copyright { grid-column: 1 / -1; grid-row: 3; margin-top: 2.5rem; }
 
   body[data-view="panel"] .intro-text { display: none; }
+
+  /* Hjem er burgunder med smørgul tekst, valgt side er smørgul med burgunder overskrifter */
+  .split { background: none; }
+  body[data-view="home"] { background: var(--burgundy); color: var(--butter); }
+  .intro { color: inherit; }
 }
 
 /* Hele prosjektkortet er klikkbart (første lenke strekkes over kortet) */
 .card { position: relative; }
 .card a:first-of-type::after { content: ""; position: absolute; inset: 0; }
 
-/* Egen musepeker (se js/cursor.js) */
+/* Egen musepeker (se js/cursor.js).
+   Pekeren er to lag som ligger oppå hverandre:
+   1) en hvit sirkel med «difference», som inverterer det som ligger under
+   2) en sirkel med fargen (81, 25, 15) og «plus-lighter», som legger til en fast farge
+   Til sammen bytter de plass på burgunder (#521921) og smørgul (#FEFFED):
+   pekeren blir smørgul på venstre side og burgunder på høyre side, og teksten under byttes også. */
 .has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
 
 .cursor {
@@ -217,13 +226,18 @@ h1, h3 { font-family: var(--font-display); }
   z-index: 1000;
   pointer-events: none;
   opacity: 0;
-  /* Blend må ligge på det ytterste elementet for å blande mot siden under */
-  mix-blend-mode: difference;
   transition: opacity 0.2s;
 }
 
 .cursor_active { opacity: 1; }
-.cursor_message { mix-blend-mode: normal; }
+
+/* Blend må ligge på det ytterste elementet for å blande mot siden under */
+.cursor--invert { mix-blend-mode: difference; }
+.cursor--tint { display: none; z-index: 1001; }
+
+@supports (mix-blend-mode: plus-lighter) {
+  .cursor--tint { display: block; mix-blend-mode: plus-lighter; }
+}
 
 .cursor__dot {
   display: flex;
@@ -233,18 +247,29 @@ h1, h3 { font-family: var(--font-display); }
   height: 80px;
   margin: -40px 0 0 -40px;
   border-radius: 50%;
-  background: #fff;
-  color: var(--bg);
   transform: scale(0.25);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.cursor--invert .cursor__dot { background: #fff; }
+.cursor--tint .cursor__dot { background: rgb(81, 25, 15); }
+
 .cursor_hover .cursor__dot { transform: scale(0.6); }
 .cursor_down .cursor__dot { transform: scale(0.2); }
 
+/* Sirkel med tekst (over prosjekter og presentasjonen): helt dekkende, ingen blanding */
+.cursor_message.cursor--invert { mix-blend-mode: normal; }
+.cursor_message.cursor--tint { display: none; }
+
 .cursor_message .cursor__dot {
-  background: var(--text);
+  background: var(--burgundy);
+  color: var(--butter);
   transform: scale(1);
+}
+
+.cursor_message.cursor_left .cursor__dot {
+  background: var(--butter);
+  color: var(--burgundy);
 }
 
 .cursor_message.cursor_down .cursor__dot { transform: scale(0.9); }
