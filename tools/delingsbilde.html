@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Lag delingsbilde</title>
+  <style>
+    @font-face {
+      font-family: "Sporting Grotesque";
+      src: url("../assets/fonts/SportingGrotesque-Bold.otf") format("opentype");
+      font-weight: 700;
+    }
+    body { max-width: 900px; margin: 2rem auto; padding: 0 1rem; font-family: system-ui, sans-serif; line-height: 1.5; }
+    textarea { width: 100%; height: 6rem; font: inherit; padding: 0.5rem; }
+    canvas { display: block; width: 100%; height: auto; margin: 1rem 0; border: 1px solid #ccc; }
+    button { font: inherit; padding: 0.5rem 1rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Delingsbilde</h1>
+  <p>
+    Bildet som vises når siden deles (<code>assets/og.jpg</code>). Teksten skal være den samme som presentasjonsteksten på forsiden.
+    Endre teksten under, last ned bildet og legg det i <code>assets/</code> med navnet <code>og.jpg</code>.
+  </p>
+
+  <textarea id="text">Hei, jeg heter Anne, og jobber som UX-designer i Vipps. Jeg har en master i design fra Universitetet i Oslo.</textarea>
+  <canvas id="card" width="1200" height="630"></canvas>
+  <button id="download">Last ned og.jpg</button>
+
+  <script>
+    const canvas = document.getElementById("card");
+    const input = document.getElementById("text");
+
+    // Deler teksten i linjer som passer innenfor bredden
+    function wrap(g, text, maxWidth) {
+      const lines = [];
+      let line = "";
+      text.split(/\s+/).forEach((word) => {
+        const test = line ? `${line} ${word}` : word;
+        if (line && g.measureText(test).width > maxWidth) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = test;
+        }
+      });
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    async function draw() {
+      await document.fonts.load('700 46px "Sporting Grotesque"');
+      const photo = new Image();
+      photo.src = "../assets/anne.jpg";
+      await photo.decode();
+
+      const g = canvas.getContext("2d");
+      g.fillStyle = "#FEFFED";
+      g.fillRect(0, 0, 1200, 630);
+
+      // Portrett til høyre (beskjæres til høyden)
+      const px = 760, pw = 440;
+      const sh = photo.naturalWidth * 630 / pw;
+      const sy = Math.max(0, (photo.naturalHeight - sh) * 0.15);
+      g.drawImage(photo, 0, sy, photo.naturalWidth, sh, px, 0, pw, 630);
+
+      // Presentasjonsteksten til venstre, midtstilt vertikalt
+      g.fillStyle = "#521921";
+      g.textBaseline = "alphabetic";
+      g.font = '700 46px "Sporting Grotesque"';
+      const lines = wrap(g, input.value.trim(), 620);
+      const lineHeight = 58;
+      const top = 315 - (lines.length * lineHeight) / 2 + 40;
+      lines.forEach((line, i) => g.fillText(line, 80, top + i * lineHeight));
+    }
+
+    input.addEventListener("input", draw);
+    document.getElementById("download").addEventListener("click", () => {
+      canvas.toBlob((blob) => {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "og.jpg";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }, "image/jpeg", 0.88);
+    });
+
+    draw();
+  </script>
+</body>
+</html>
