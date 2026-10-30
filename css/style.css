@@ -106,7 +106,7 @@ h1, h3 { font-family: var(--font-display); }
 }
 
 .site-nav a { text-decoration: none; color: var(--muted); }
-.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--text); }
+.site-nav a[aria-current="page"] { color: var(--text); }
 
 .panel { padding: 3rem 0 2rem; }
 .panel[hidden] { display: none; }
