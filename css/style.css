@@ -68,9 +68,18 @@ h1, h3 { font-family: var(--font-display); }
 .logo { font-family: var(--font-display); font-weight: 700; text-decoration: none; }
 
 /* Toppstilt, på linje med overskriften til høyre */
+.intro-text { margin-top: 4rem; }
+
+.download {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+}
+
 .intro h1 {
   max-width: 28ch;
-  margin: 4rem 0 0;
+  margin: 0;
   font-size: clamp(1.15rem, 1.7vw, 1.6rem);
   font-weight: 600;
   line-height: 1.2;
@@ -152,13 +161,13 @@ h1, h3 { font-family: var(--font-display); }
     text-align: right;
   }
 
-  .intro h1 {
+  .intro-text {
     grid-column: 1 / -1;
     grid-row: 2;
-    margin: 2.5rem 0 0;
-    max-width: none;
-    font-size: 1.5rem;
+    margin-top: 2.5rem;
   }
+
+  .intro h1 { max-width: none; font-size: 1.5rem; }
 
   main { grid-column: 1 / -1; grid-row: 2; }
   .cv { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -166,5 +175,5 @@ h1, h3 { font-family: var(--font-display); }
 
   .copyright { grid-column: 1 / -1; grid-row: 3; margin-top: 2.5rem; }
 
-  body[data-view="panel"] .intro h1 { display: none; }
+  body[data-view="panel"] .intro-text { display: none; }
 }
