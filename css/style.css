@@ -118,6 +118,7 @@ body[data-page="om"] .intro-photo { display: block; }
 }
 
 .site-nav a { text-decoration: none; color: var(--olive); }
+.nav-short { display: none; }
 .site-nav a[aria-current="page"] { color: var(--burgundy); }
 
 .panel { padding: 3rem 0 2rem; }
@@ -221,17 +222,19 @@ body[data-page="om"] .intro-photo { display: block; }
     background: none;
   }
 
-  /* Bare «Prosjekter» i menyen. Om meg og Kontakt ligger på hjem-siden. */
-  .site-nav a:not([href="#prosjekter"]) { display: none; }
-  .site-nav a { padding: 1rem 0 1rem 1rem; } /* større trykkflate */
+  /* Kompakt meny som hopper til delene av siden. «Om meg» heter «CV» her. */
+  .logo { font-size: 0.75rem; }
+  .site-nav { gap: 0.75rem; font-size: 0.75rem; }
+  .site-nav a { position: relative; padding: 1rem 0; }
+  .site-nav a::after { content: ""; position: absolute; inset: 0 -0.4rem; } /* større trykkflate */
+  .nav-full { display: none; }
+  .nav-short { display: inline; }
 
   .intro-text { order: 1; margin-top: 0; }
   .intro h1 { max-width: none; font-size: 1.5rem; }
 
-  main { order: 2; display: flex; flex-direction: column; }
-  #kontakt { order: 1; }
-  #om { order: 2; }
-  .panel { padding: 2.5rem 0 0; }
+  main { order: 2; }
+  .panel { padding: 3rem 0 0; scroll-margin-top: var(--header-h); }
   body[data-view="panel"] .panel { padding-top: 0.5rem; }
   .cv { grid-template-columns: 1fr; gap: 2.5rem; }
 
@@ -240,6 +243,16 @@ body[data-page="om"] .intro-photo { display: block; }
   /* Portrett på hjem-siden */
   body[data-view="home"] .intro-photo { display: block; width: min(60vw, 240px); height: auto; }
   body[data-view="panel"] .intro-text { display: none; }
+}
+
+/* Smale telefoner: tettere meny, og under 350 px bare «Prosjekter», så navnet får plass */
+@media (max-width: 365px) {
+  .site-nav { gap: 0.5rem; }
+}
+
+/* Svært smale telefoner: bare «Prosjekter» i menyen */
+@media (max-width: 350px) {
+  .site-nav a[href="#om"], .site-nav a[href="#kontakt"] { display: none; }
 }
 
 /* Hele prosjektkortet er klikkbart (første lenke strekkes over kortet) */
