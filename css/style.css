@@ -1,5 +1,5 @@
-/* Sporting Grotesque: fontfilene ligger i assets/fonts/, som er gitignored fordi
-   lisensen for webbruk ikke er avklart. Uten filene faller titler tilbake til Inter. */
+/* Sporting Grotesque (Lucas Le Bihan), lisensiert under SIL Open Font License 1.1.
+   Lisensteksten ligger i assets/fonts/OFL.txt. */
 @font-face {
   font-family: "Sporting Grotesque";
   src: url("../assets/fonts/SportingGrotesque-Regular.otf") format("opentype");
