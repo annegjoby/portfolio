@@ -69,7 +69,7 @@ function renderProject(p) {
 const panels = document.querySelectorAll(".panel");
 const navLinks = document.querySelectorAll(".site-nav a");
 const mobile = window.matchMedia("(max-width: 800px)");
-const introText = document.querySelector(".intro-text");
+const introHeading = document.querySelector(".intro h1");
 
 function parse(hash) {
   const [base, slug] = hash.split("/");
@@ -105,8 +105,8 @@ function show(hash) {
   document.body.dataset.page = mobile.matches ? "" : visible[0];
 
   // På Om meg er presentasjonsteksten ikke lenger en lenke til siden
-  if (!mobile.matches && visible[0] !== "om") introText.dataset.cursor = "Om meg";
-  else introText.removeAttribute("data-cursor");
+  if (!mobile.matches && visible[0] !== "om") introHeading.dataset.cursor = "Om meg";
+  else introHeading.removeAttribute("data-cursor");
 }
 
 // Etter et valg: på mobil scroller vi til riktig del av den lange siden, ellers til toppen
