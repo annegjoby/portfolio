@@ -56,6 +56,15 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
 });
 
 window.addEventListener("popstate", () => show(location.hash.slice(1)));
-mobile.addEventListener("change", () => show(location.hash.slice(1)));
+
+// Navnet er "hjem" på mobil. På desktop er det vanlig tekst, ikke en lenke.
+const logo = document.querySelector(".logo");
+function syncLogo() {
+  if (mobile.matches) logo.setAttribute("href", "#hjem");
+  else logo.removeAttribute("href");
+}
+
+mobile.addEventListener("change", () => { show(location.hash.slice(1)); syncLogo(); });
 show(location.hash.slice(1));
+syncLogo();
 

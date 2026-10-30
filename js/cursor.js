@@ -23,7 +23,7 @@ if (fine.matches) {
     cursor.style.transform = `translate(${x}px, ${y}px)`;
 
     const el = document.elementFromPoint(x, y);
-    const hit = el?.closest("[data-cursor], a, button");
+    const hit = el?.closest("[data-cursor], a[href], button");
     const label = el?.closest("[data-cursor]")?.dataset.cursor;
 
     cursor.classList.toggle("cursor_hover", !!hit);
