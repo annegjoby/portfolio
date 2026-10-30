@@ -42,13 +42,12 @@ body {
 a { color: inherit; }
 h1, h3 { font-family: var(--font-display); }
 
-/* To kolonner: 40 / 60. Venstre er smørgul, høyre er burgunder. */
+/* To kolonner: 40 / 60. Hele siden er smørgul. */
 .split {
   display: grid;
   grid-template-columns: 2fr 3fr;
   min-height: 100vh;
   min-height: 100svh;
-  background: linear-gradient(to right, var(--butter) 40%, var(--burgundy) 40%);
 }
 
 /* Venstre: presentasjon, står stille mens høyre side scroller */
@@ -92,11 +91,6 @@ h1, h3 { font-family: var(--font-display); }
 /* Høyre: meny og skiftende innhold */
 .content {
   padding: 0 var(--pad) var(--pad);
-  /* Høyre side er burgunder, så tekst, dempet tekst og streker byttes til smørgul */
-  --text: var(--butter);
-  --muted: rgba(254, 255, 237, 0.7);
-  --line: rgba(254, 255, 237, 0.25);
-  color: var(--text);
 }
 
 /* Menyen blir stående øverst når innholdet scroller */
@@ -105,7 +99,7 @@ h1, h3 { font-family: var(--font-display); }
   top: 0;
   z-index: 5;
   padding: var(--pad) 0 1rem;
-  background: var(--burgundy);
+  background: var(--butter);
   display: flex;
   justify-content: flex-end;
   gap: 1.5rem;
@@ -113,7 +107,7 @@ h1, h3 { font-family: var(--font-display); }
 }
 
 .site-nav a { text-decoration: none; color: var(--olive); }
-.site-nav a[aria-current="page"] { color: var(--butter); }
+.site-nav a[aria-current="page"] { color: var(--burgundy); }
 
 .panel { padding: 3rem 0 2rem; }
 .panel[hidden] { display: none; }
@@ -208,10 +202,6 @@ h1, h3 { font-family: var(--font-display); }
 
   body[data-view="panel"] .intro-text { display: none; }
 
-  /* Hjem er smørgul med burgunder tekst, valgt side er burgunder med smørgul tekst */
-  .split { background: none; }
-  body[data-view="home"] { background: var(--butter); color: var(--burgundy); }
-  body[data-view="panel"] { background: var(--burgundy); color: var(--butter); }
   .intro { color: inherit; }
 }
 
@@ -222,7 +212,7 @@ h1, h3 { font-family: var(--font-display); }
 /* Egen musepeker (se js/cursor.js).
    Pekeren er tre lag som ligger oppå hverandre og sammen gjør at alt under pekeren byttes til to farger:
    1) «filter»: gjør det som ligger under om til svart/hvitt. Alt lyst (smørgul bakgrunn) blir svart,
-      alt annet (burgunder, olivengrønn, og burgunder bakgrunn på høyre side) blir hvitt.
+      alt annet (burgunder og olivengrønn tekst) blir hvitt.
    2) «multiply» med smørgul: hvitt blir smørgul, svart forblir svart.
    3) «lighten» med burgunder: svart blir burgunder, smørgul forblir smørgul.
    Resultat: over smørgul bakgrunn er pekeren burgunder, over alt annet er den smørgul,
@@ -274,14 +264,9 @@ h1, h3 { font-family: var(--font-display); }
 .cursor_active.cursor_message .cursor__dot {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  background: var(--butter);
-  color: var(--burgundy);
-  transform: scale(1);
-}
-
-.cursor_active.cursor_message.cursor_left .cursor__dot {
   background: var(--burgundy);
   color: var(--butter);
+  transform: scale(1);
 }
 
 .cursor_active.cursor_message.cursor_down .cursor__dot { transform: scale(0.9); }
@@ -289,8 +274,7 @@ h1, h3 { font-family: var(--font-display); }
 /* Nettlesere uten backdrop-filter får en enkel, ensfarget peker */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .cursor--multiply, .cursor--lighten { display: none; }
-  .cursor--filter .cursor__dot { background: var(--butter); }
-  .cursor--filter.cursor_left .cursor__dot { background: var(--burgundy); }
+  .cursor--filter .cursor__dot { background: var(--burgundy); }
 }
 
 .cursor__message {

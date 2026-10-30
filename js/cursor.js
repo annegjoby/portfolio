@@ -35,7 +35,6 @@ if (fine.matches) {
 
     toggle("cursor_hover", !!hit);
     toggle("cursor_message", !!label);
-    toggle("cursor_left", !!el?.closest(".intro"));
     message.textContent = label || "";
   }
 
