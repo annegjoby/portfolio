@@ -80,11 +80,10 @@ h1, h3 { font-family: var(--font-display); }
 /* Portrett under presentasjonen, kun på Om meg */
 .intro-photo {
   display: none;
-  width: clamp(120px, 13vw, 190px);
-  max-height: 38svh;
+  height: min(46svh, 22rem);
+  width: auto;
   margin-top: 2rem;
-  aspect-ratio: 1374 / 2048;
-  object-fit: cover;
+  aspect-ratio: 1215 / 1776;
 }
 
 body[data-page="om"] .intro-photo { display: block; }
